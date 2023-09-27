@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class Exhibit {
   int? idexhibit;
   String? omada;
@@ -11,13 +13,13 @@ class Exhibit {
   String thesi;
   String paratiriseis;
   String troposapoktisis;
-  List<int> pic1;
+  Uint8List pic1;
   String? picname1;
-  List<int> pic2;
+  Uint8List pic2;
   String? picname2;
-  List<int> pic3;
+  Uint8List pic3;
   String? picname3;
-  List<int> pic4;
+  Uint8List pic4;
   String? picname4;
   String? category;
   String? exhibitscol;

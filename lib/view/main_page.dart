@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:museum_app/controllers/exhibit_controller.dart';
+import 'package:sqlite_viewer/sqlite_viewer.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -21,19 +23,60 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          gradient: LinearGradient(colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).colorScheme.secondary
-          ], begin: Alignment.bottomRight, end: Alignment.topLeft),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                gradient: LinearGradient(colors: [
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).colorScheme.secondary
+                ], begin: Alignment.bottomRight, end: Alignment.topLeft),
+              ),
+              child: myCarousel(),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () async {
+                  
+                  await _saveDbValues();
+                },
+                child: const Text("Save data")),
+            const SizedBox(height: 10),
+            IconButton(
+              icon: const Icon(Icons.folder),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DatabaseList(),
+                  ),
+                );
+              },
+            )
+          ],
         ),
-        child: myCarousel(),
       ),
     );
   }
+
+  Future<void> _saveDbValues() async {
+
+  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+  await ExhibitController.rawInsert();
 }
+}
+
+
 
 final List<Widget> imageSliders = imgList
     .map((item) => Container(

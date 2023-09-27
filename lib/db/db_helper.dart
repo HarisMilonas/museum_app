@@ -7,35 +7,31 @@ class SQLHelper {
   // create tables
   static Future<void> createTables(sql.Database database) async {
     await database.execute('''CREATE TABLE exhibits (
-  idexhibit INTEGER NOT NULL AUTO_INCREMENT,
-  omada VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  idexhibit INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  omada VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
   aa INTEGER DEFAULT NULL,
-  aagenkat VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  aaeidkat VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  eidos LONGTEXT COLLATE utf8mb4_unicode_ci,
-  diastaseis VARCHAR(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  proelefsi VARCHAR(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  chronologisi VARCHAR(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  thesi LONGTEXT COLLATE utf8mb4_unicode_ci,
-  paratiriseis LONGTEXT COLLATE utf8mb4_unicode_ci,
-  troposapoktisis LONGTEXT COLLATE utf8mb4_unicode_ci,
+  aagenkat VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
+  aaeidkat VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
+  eidos TEXT COLLATE NOCASE,
+  diastaseis VARCHAR(1024) COLLATE NOCASE DEFAULT NULL,
+  proelefsi VARCHAR(1024) COLLATE NOCASE DEFAULT NULL,
+  chronologisi VARCHAR(1024) COLLATE NOCASE DEFAULT NULL,
+  thesi TEXT COLLATE NOCASE,
+  paratiriseis TEXT COLLATE NOCASE DEFAULT NULL,
+  troposapoktisis TEXT COLLATE NOCASE,
   pic1 BLOB,
-  picname1 VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  picname1 VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
   pic2 BLOB,
-  picname2 VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  picname2 VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
   pic3 BLOB,
-  icname3 VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  picname3 VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
   pic4 BLOB,
-  picname4 VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  category VARCHAR(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  exhibitscol VARCHAR(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`idexhibit`)
-)ENGINE=InnoDB AUTO_INCREMENT=7235 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  picname4 VARCHAR(45) COLLATE NOCASE DEFAULT NULL,
+  category VARCHAR(256) COLLATE NOCASE DEFAULT NULL,
+  exhibitscol VARCHAR(45) COLLATE NOCASE DEFAULT NULL
+);
+
 ''');
-   
-  
- 
-   
   }
 
 // open or Create db
@@ -44,9 +40,7 @@ class SQLHelper {
         onCreate: (sql.Database database, int version) async {
       await createTables(database);
     }, onUpgrade: (db, oldVersion, newVersion) async {
-      if (oldVersion < newVersion) {
-        
-      }
+      if (oldVersion < newVersion) {}
     });
   }
 
