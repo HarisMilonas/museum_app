@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 
+#hide env file 
+/lib/services/.env
+
 # IntelliJ related
 *.iml
 *.ipr
