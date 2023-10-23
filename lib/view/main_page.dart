@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:museum_app/api/exhibits.dart';
 import 'package:museum_app/componets/waiting_dialog.dart';
 import 'package:museum_app/models/exhibit.dart';
 
@@ -35,7 +36,13 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-          
+              TextButton(
+                onPressed: () async {
+                  List<Exhibit>? items = await ExhibitApi().getExhibits();
+                  print(items?.map((e) => e.toString()));
+                },
+                child: const Text('Hit API'),
+              ),
               myCarousel(),
             ],
           ),

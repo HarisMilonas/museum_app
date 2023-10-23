@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+
 class Exhibit {
   int? idexhibit;
   String? omada;
@@ -10,16 +11,16 @@ class Exhibit {
   String? diastaseis;
   String? proelefsi;
   String? chronologisi;
-  String? thesi;
-  String? paratiriseis;
-  String? troposapoktisis;
-  BlobPic? pic1;
+  String thesi;
+  String paratiriseis;
+  String troposapoktisis;
+  Uint8List pic1;
   String? picname1;
-  BlobPic? pic2;
+  Uint8List pic2;
   String? picname2;
-  BlobPic? pic3;
+  Uint8List pic3;
   String? picname3;
-  BlobPic? pic4;
+  Uint8List pic4;
   String? picname4;
   String? category;
   String? exhibitscol;
@@ -34,16 +35,16 @@ class Exhibit {
     this.diastaseis,
     this.proelefsi,
     this.chronologisi,
-    this.thesi,
-    this.paratiriseis,
-    this.troposapoktisis,
-    this.pic1,
+    required this.thesi,
+    required this.paratiriseis,
+    required this.troposapoktisis,
+    required this.pic1,
     this.picname1,
-    this.pic2,
+    required this.pic2,
     this.picname2,
-    this.pic3,
+    required this.pic3,
     this.picname3,
-    this.pic4,
+    required this.pic4,
     this.picname4,
     this.category,
     this.exhibitscol,
@@ -63,13 +64,13 @@ class Exhibit {
       'thesi': thesi,
       'paratiriseis': paratiriseis,
       'troposapoktisis': troposapoktisis,
-      'pic1': pic1 != null ? pic1!.toMap() : null,
+      'pic1': pic1,
       'picname1': picname1,
-      'pic2': pic2 != null ? pic2!.toMap() : null,
+      'pic2': pic2,
       'picname2': picname2,
-      'pic3': pic3 != null ? pic3!.toMap() : null,
+      'pic3': pic3,
       'picname3': picname3,
-      'pic4': pic4 != null ? pic4!.toMap() : null,
+      'pic4': pic4,
       'picname4': picname4,
       'category': category,
       'exhibitscol': exhibitscol,
@@ -91,39 +92,17 @@ class Exhibit {
       thesi: map['thesi'],
       paratiriseis: map['paratiriseis'],
       troposapoktisis: map['troposapoktisis'],
-      pic1: map['pic1'] != null ? BlobPic.fromMap(map['pic1']) : null,
+      pic1: map['pic1'],
       picname1: map['picname1'],
-      pic2: map['pic2'] != null ? BlobPic.fromMap(map['pic2']) : null,
+      pic2: map['pic2'],
       picname2: map['picname2'],
-      pic3: map['pic3'] != null ? BlobPic.fromMap(map['pic3']) : null,
+      pic3: map['pic3'],
       picname3: map['picname3'],
-      pic4: map['pic4'] != null ? BlobPic.fromMap(map['pic4']) : null,
+      pic4: map['pic4'],
       picname4: map['picname4'],
       category: map['category'],
       exhibitscol: map['exhibitscol'],
     );
   }
-}
 
-class BlobPic {
-  String? buffer;
-  Uint8List? pic;
-
-  BlobPic({this.buffer, this.pic});
-
-  // Convert BlobPic object to a Map
-  Map<String, dynamic> toMap() {
-    return {
-      'buffer': buffer,
-      'pic': pic,
-    };
-  }
-
-  // Create a BlobPic object from a Map
-  static BlobPic fromMap(Map<String, dynamic> map) {
-    return BlobPic(
-      buffer: map['buffer'],
-      pic: map['pic'],
-    );
-  }
 }
