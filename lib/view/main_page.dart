@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:museum_app/api/exhibits.dart';
@@ -39,11 +41,27 @@ class _HomePageState extends State<HomePage> {
               TextButton(
                 onPressed: () async {
                   List<Exhibit>? items = await ExhibitApi().getExhibits();
-                  print(items?.map((e) => e.toString()));
+                  print(items!.length);
                 },
                 child: const Text('Hit API'),
               ),
-              myCarousel(),
+              FutureBuilder(
+                future: ExhibitApi().getExhibits(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return myCarousel(snapshot.data);
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('Error fetching exhibits from database.'),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -51,7 +69,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  final List<Widget> imageSliders = imgList
+  final List<Widget> sa = imgList
       .map((item) => Container(
             margin: const EdgeInsets.all(5.0),
             child: ClipRRect(
@@ -91,7 +109,9 @@ class _HomePageState extends State<HomePage> {
           ))
       .toList();
 
-  Widget myCarousel() {
+  Widget myCarousel(List<Exhibit>? exhibits) {
+    final List<Widget> imageSliders = createImageSliders(exhibits);
+    print('we are inside the carousel function ${imageSliders.length}');
     return CarouselSlider(
       options: CarouselOptions(
         aspectRatio: 2.0,
@@ -102,5 +122,99 @@ class _HomePageState extends State<HomePage> {
       ),
       items: imageSliders,
     );
+  }
+
+  List<Widget> createImageSliders(List<Exhibit>? exhibits) {
+    List<Widget> imageSliders = [];
+
+    for (Exhibit exhibit in exhibits!) {
+      print(exhibit.pic1?.data.toString());
+      if (exhibit.pic1?.data != null) {
+
+        var item = Container(
+          margin: const EdgeInsets.all(5.0),
+          child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+              child: Stack(
+                children: <Widget>[
+                  Image.memory(exhibit.pic1?.data as Uint8List),
+                  // Image.network(item.pic1.pic, fit: BoxFit.cover, width: 1000.0),
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(200, 0, 0, 0),
+                            Color.fromARGB(0, 0, 0, 0)
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: Text(
+                        'No. ${exhibits.indexOf(exhibit)} image',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        );
+
+        imageSliders.add(item);
+      } else {
+        continue;
+      }
+    }
+    return imageSliders;
+    // return exhibits!
+    //     .map((item) => Container(
+    //           margin: const EdgeInsets.all(5.0),
+    //           child: ClipRRect(
+    //               borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+    //               child: Stack(
+    //                 children: <Widget>[
+    //                   Image.memory(item.pic1?.pic as Uint8List),
+    //                   // Image.network(item.pic1.pic, fit: BoxFit.cover, width: 1000.0),
+    //                   Positioned(
+    //                     bottom: 0.0,
+    //                     left: 0.0,
+    //                     right: 0.0,
+    //                     child: Container(
+    //                       decoration: const BoxDecoration(
+    //                         gradient: LinearGradient(
+    //                           colors: [
+    //                             Color.fromARGB(200, 0, 0, 0),
+    //                             Color.fromARGB(0, 0, 0, 0)
+    //                           ],
+    //                           begin: Alignment.bottomCenter,
+    //                           end: Alignment.topCenter,
+    //                         ),
+    //                       ),
+    //                       padding: const EdgeInsets.symmetric(
+    //                           vertical: 10.0, horizontal: 20.0),
+    //                       child: Text(
+    //                         'No. ${exhibits.indexOf(item)} image',
+    //                         style: const TextStyle(
+    //                           color: Colors.white,
+    //                           fontSize: 20.0,
+    //                           fontWeight: FontWeight.bold,
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ],
+    //               )),
+    //         ))
+    //     .toList();
   }
 }

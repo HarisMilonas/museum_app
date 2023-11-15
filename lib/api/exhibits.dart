@@ -16,8 +16,16 @@ class ExhibitApi {
 
         var items = jsonDecode(response.body)['exhibits'];
 
-        List<Exhibit> exhibits =
-            items.map((item) => Exhibit.fromMap(item!)).toList();
+        // List<Exhibit> exhibits =
+        //     items.map((item) => Exhibit.fromMap(item!)).toList();
+
+        List<Exhibit> exhibits = [];
+
+        for (var item in items) {
+          var exhibit = Exhibit.fromMap(item);
+          exhibits.add(exhibit);
+        }
+
         return exhibits;
       } else {
         print('error status code ${response.statusCode}');

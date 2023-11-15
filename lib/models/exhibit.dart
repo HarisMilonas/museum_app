@@ -78,52 +78,65 @@ class Exhibit {
 
   // Create an Exhibit object from a map
   factory Exhibit.fromMap(Map<String, dynamic> map) {
-    return Exhibit(
-      idexhibit: map['idexhibit'],
-      omada: map['omada'],
-      aa: map['aa'],
-      aagenkat: map['aagenkat'],
-      aaeidkat: map['aaeidkat'],
-      eidos: map['eidos'],
-      diastaseis: map['diastaseis'],
-      proelefsi: map['proelefsi'],
-      chronologisi: map['chronologisi'],
-      thesi: map['thesi'],
-      paratiriseis: map['paratiriseis'],
-      troposapoktisis: map['troposapoktisis'],
-      pic1: map['pic1'] != null ? BlobPic.fromMap(map['pic1']) : null,
-      picname1: map['picname1'],
-      pic2: map['pic2'] != null ? BlobPic.fromMap(map['pic2']) : null,
-      picname2: map['picname2'],
-      pic3: map['pic3'] != null ? BlobPic.fromMap(map['pic3']) : null,
-      picname3: map['picname3'],
-      pic4: map['pic4'] != null ? BlobPic.fromMap(map['pic4']) : null,
-      picname4: map['picname4'],
-      category: map['category'],
-      exhibitscol: map['exhibitscol'],
-    );
+    try {
+      var item = Exhibit(
+        idexhibit: map['idexhibit'],
+        omada: map['omada'],
+        aa: map['aa'],
+        aagenkat: map['aagenkat'],
+        aaeidkat: map['aaeidkat'],
+        eidos: map['eidos'],
+        diastaseis: map['diastaseis'],
+        proelefsi: map['proelefsi'],
+        chronologisi: map['chronologisi'],
+        thesi: map['thesi'],
+        paratiriseis: map['paratiriseis'],
+        troposapoktisis: map['troposapoktisis'],
+        pic1: map['pic1'] != null ? BlobPic.fromMap(map['pic1']) : null,
+        picname1: map['picname1'],
+        pic2: map['pic2'] != null ? BlobPic.fromMap(map['pic2']) : null,
+        picname2: map['picname2'],
+        pic3: map['pic3'] != null ? BlobPic.fromMap(map['pic3']) : null,
+        picname3: map['picname3'],
+        pic4: map['pic4'] != null ? BlobPic.fromMap(map['pic4']) : null,
+        picname4: map['picname4'],
+        category: map['category'],
+        exhibitscol: map['exhibitscol'],
+      );
+      return item;
+    } catch (e) {
+      print("We caught and error! ${e.toString()}");
+      return Exhibit(eidos: '');
+    }
   }
 }
 
 class BlobPic {
-  String? buffer;
-  Uint8List? pic;
+  String? type;
+  Uint8List? data;
 
-  BlobPic({this.buffer, this.pic});
+  BlobPic({this.type, this.data});
 
   // Convert BlobPic object to a Map
   Map<String, dynamic> toMap() {
     return {
-      'buffer': buffer,
-      'pic': pic,
+      'type': type,
+      'data': data,
     };
   }
 
   // Create a BlobPic object from a Map
   static BlobPic fromMap(Map<String, dynamic> map) {
+    List<int> data = [];
+    for (var item in map['data']) {
+      data.add(item);
+    }
+
+    // print(mapitem.runtimeType.toString());
+    // print(map['data'].runtimeType.toString());
     return BlobPic(
-      buffer: map['buffer'],
-      pic: map['pic'],
+      type: map['type'],
+      data: Uint8List.fromList(data),
     );
   }
 }
