@@ -37,25 +37,4 @@ class ExhibitApi {
   }
 }
 
-List<dynamic> _cleanData(List<dynamic> responseBody) {
-  //i will save the ids and the blobs to modify the data
-  List<Map<String, dynamic>> idsAndBlobs = [];
-  try {
-    for (var item in responseBody) {
-      item?.forEach((key, value) {
-        // teh fields are pic1,pic2,pic3....
-        int counter = 1;
-        if (item[key].runtimeType.toString() == '_Map<String, dynamic>') {
-          //assign the Uint8list
-          // item['pic$counter'] = value['data'];
-          // item.remove(key);
-          idsAndBlobs.add({'id': item['id'], 'pic$counter': value['data']});
-          counter++;
-        }
-      });
-    }
-  } catch (e) {
-    print('Error cleaning data: ${e.toString()}');
-  }
-  return responseBody;
-}
+

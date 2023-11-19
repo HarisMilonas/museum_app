@@ -127,13 +127,11 @@ class BlobPic {
 
   // Create a BlobPic object from a Map
   static BlobPic fromMap(Map<String, dynamic> map) {
+    //add them to a list int because it sees it as a list<dynamic> otherwise
     List<int> data = [];
     for (var item in map['data']) {
       data.add(item);
     }
-
-    // print(mapitem.runtimeType.toString());
-    // print(map['data'].runtimeType.toString());
     return BlobPic(
       type: map['type'],
       data: Uint8List.fromList(data),
