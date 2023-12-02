@@ -12,8 +12,6 @@ class ExhibitApi {
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
-        print('WE HAVE DATAAAAAAAA');
-
         var items = jsonDecode(response.body)['exhibits'];
 
         // List<Exhibit> exhibits =
@@ -36,5 +34,3 @@ class ExhibitApi {
     return null;
   }
 }
-
-

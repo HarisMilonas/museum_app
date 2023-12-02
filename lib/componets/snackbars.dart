@@ -4,8 +4,14 @@ class CustomSnackBar {
   static successMessage(
       BuildContext context, String message, void Function()? onTap) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    return ScaffoldMessenger.of(context).showSnackBar(
+
+
+    return
+    context.mounted ? null 
+    :
+     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        
         content: Container(
           padding: const EdgeInsets.all(8),
           height: 85,
@@ -50,6 +56,7 @@ class CustomSnackBar {
           ),
         ),
         behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
         backgroundColor: Colors.transparent,
         elevation: 3,
       ),
@@ -58,7 +65,10 @@ class CustomSnackBar {
 
   static errorMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    return ScaffoldMessenger.of(context).showSnackBar(
+
+    return 
+      !context.mounted ? null 
+      : ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Container(
           padding: const EdgeInsets.all(8),
@@ -96,6 +106,7 @@ class CustomSnackBar {
           ),
         ),
         behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
         backgroundColor: Colors.transparent,
         elevation: 3,
       ),
