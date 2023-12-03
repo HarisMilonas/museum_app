@@ -12,10 +12,14 @@ class RoleIndex extends StatefulWidget {
 }
 
 class _RoleIndexState extends State<RoleIndex> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return const BaseLayout(
-      bodyWidget: Center(
+    return  BaseLayout(
+      user: widget.user,
+      withFloatingButtons: true,
+      scaffoldKey: _scaffoldKey,
+      bodyWidget: const Center(
         child: Text("ROLES PAGEEEE!!!"),
       ),
     );

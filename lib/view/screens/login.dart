@@ -7,6 +7,7 @@ import 'package:museum_app/componets/miscellanious.dart';
 import 'package:museum_app/models/exhibit.dart';
 import 'package:museum_app/view/componets/bottom_sheet_login.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
+import 'package:museum_app/view/screens/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   Future<List<Exhibit>?>? _future;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -24,9 +26,13 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
+      user: null,
+      scaffoldKey: _scaffoldKey,
       bodyWidget: Padding(
         padding: const EdgeInsets.only(bottom: 30.0),
         child: Center(
@@ -90,7 +96,12 @@ class _LoginPageState extends State<LoginPage> {
                     fixedSize: MaterialStateProperty.all(
                         Size(CustomSizes.maxWidth(context) - 70, 50)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomePage(user: null)));
+                  },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,

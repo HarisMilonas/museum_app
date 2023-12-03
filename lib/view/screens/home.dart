@@ -7,18 +7,33 @@ class HomePage extends StatefulWidget {
   const HomePage({required this.user, Key? key}) : super(key: key);
 
   final User? user;
-
+ 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   Widget build(BuildContext context) {
-    return  BaseLayout(
+    return BaseLayout(
+      scaffoldKey: _scaffoldKey,
+      withFloatingButtons: true,
+      user: widget.user,
       drawer: MyNavigationDrawer(user: widget.user),
-        bodyWidget: const Center(
-      child: Text("HOME PAGEEEE!")
-    ));
+        bodyWidget: 
+           const Padding(
+             padding: EdgeInsets.only(top: 50.0 , bottom: 10 , left: 15 , right: 15),
+             child: Column(
+              children: [
+                
+              ],
+                     ),
+           ),
+        
+    );
   }
 }

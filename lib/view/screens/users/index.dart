@@ -12,9 +12,12 @@ class UserIndex extends StatefulWidget {
 }
 
 class _UserIndexState extends State<UserIndex> {
+     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return const BaseLayout(
-        bodyWidget: Center(child: Text("USERS PAGEEEE!!!"),),);
+    return  BaseLayout(
+      withFloatingButtons: true,
+      scaffoldKey: _scaffoldKey,
+        bodyWidget: const Center(child: Text("USERS PAGEEEE!!!"),), user: widget.user,);
   }
 }
