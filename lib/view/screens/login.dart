@@ -18,7 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   Future<List<Exhibit>?>? _future;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   @override
   void initState() {
@@ -32,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BaseLayout(
       user: null,
-      scaffoldKey: _scaffoldKey,
       bodyWidget: Padding(
         padding: const EdgeInsets.only(bottom: 30.0),
         child: Center(
@@ -97,9 +96,10 @@ class _LoginPageState extends State<LoginPage> {
                         Size(CustomSizes.maxWidth(context) - 70, 50)),
                   ),
                   onPressed: () {
-                     Navigator.pushReplacement(
+                     Navigator.push(
                   context,
                   MaterialPageRoute(
+                      settings: const RouteSettings(name: "HomePage"),
                       builder: (context) => const HomePage(user: null)));
                   },
                   child: const Row(

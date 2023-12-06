@@ -32,16 +32,9 @@ class _MyMenuItemsState extends State<MyMenuItems> {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).popUntil((route) => route.isFirst);
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(user: widget.user)));
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(user: widget.user)));
+              Navigator.pop(context);
+              Navigator.of(context)
+                  .popUntil((route) => route.settings.name== 'HomePage');
             },
           ),
           ExpansionTile(
@@ -59,8 +52,9 @@ class _MyMenuItemsState extends State<MyMenuItems> {
                 leading: const Icon(Icons.person),
                 title: const Text('Users'),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.pop(context);
+                  Navigator.of(context)
+                      .popUntil((route) => route.settings.name == 'HomePage');
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -92,8 +86,9 @@ class _MyMenuItemsState extends State<MyMenuItems> {
                 leading: const Icon(Icons.supervisor_account),
                 title: const Text('Roles'),
                 onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.pop(context);
+                  Navigator.of(context)
+                      .popUntil((route) => route.settings.name == 'HomePage');
                   Navigator.push(
                       context,
                       MaterialPageRoute(

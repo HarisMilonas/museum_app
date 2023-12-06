@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
+import 'package:museum_app/view/componets/drawer/drawer.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
 
 class RoleIndex extends StatefulWidget {
@@ -12,13 +13,12 @@ class RoleIndex extends StatefulWidget {
 }
 
 class _RoleIndexState extends State<RoleIndex> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return  BaseLayout(
+      drawer: MyNavigationDrawer(user: widget.user,),
       user: widget.user,
       withFloatingButtons: true,
-      scaffoldKey: _scaffoldKey,
       bodyWidget: const Center(
         child: Text("ROLES PAGEEEE!!!"),
       ),

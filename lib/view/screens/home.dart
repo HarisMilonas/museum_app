@@ -14,22 +14,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      scaffoldKey: _scaffoldKey,
       withFloatingButtons: true,
       user: widget.user,
       drawer: MyNavigationDrawer(user: widget.user),
         bodyWidget: 
-           const Padding(
-             padding: EdgeInsets.only(top: 50.0 , bottom: 10 , left: 15 , right: 15),
+            Padding(
+             padding: const EdgeInsets.only(top: 50.0 , bottom: 10 , left: 15 , right: 15),
              child: Column(
               children: [
-                
+                // Container(
+                //   width: double.infinity,
+                //   height: 300,
+                //   decoration: const BoxDecoration(
+                //     image: DecorationImage(image: AssetImage('images/background.png'), fit: BoxFit.cover)
+                //   ),
+                //   child: const Text("Ανακάλυψε τα\nεκθέματα",style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                // )
               ],
                      ),
            ),

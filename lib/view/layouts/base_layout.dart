@@ -5,13 +5,11 @@ import 'package:museum_app/view/screens/login.dart';
 class BaseLayout extends StatefulWidget {
   const BaseLayout(
       {super.key,
-      this.scaffoldKey,
       required this.bodyWidget,
       this.drawer,
       this.withFloatingButtons = false,
       required this.user});
 
-  final GlobalKey<ScaffoldState>? scaffoldKey;
   final User? user;
   final bool? withFloatingButtons;
   final Widget bodyWidget;
@@ -22,26 +20,23 @@ class BaseLayout extends StatefulWidget {
 }
 
 class _BaseLayoutState extends State<BaseLayout> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: widget.scaffoldKey,
+      key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: widget.withFloatingButtons!
           ? Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
+              margin: const EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
               color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () {
-                      ModalRoute.of(context)!.isFirst
-                          ? Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()))
-                          : Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     child: CircleAvatar(
                       backgroundColor: Colors.black.withOpacity(0.2),
@@ -52,8 +47,7 @@ class _BaseLayoutState extends State<BaseLayout> {
                   ),
                   widget.user != null
                       ? InkWell(
-                          onTap: () =>
-                              widget.scaffoldKey!.currentState!.openDrawer(),
+                          onTap: () => _scaffoldKey.currentState!.openDrawer(),
                           child: CircleAvatar(
                             backgroundColor: Colors.black.withOpacity(0.2),
                             child: const Icon(Icons.menu),

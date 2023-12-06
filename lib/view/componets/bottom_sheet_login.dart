@@ -104,9 +104,12 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
 
     if (authenticateResult.containsKey("user") && mounted) {
       User user = authenticateResult["user"];
-       Navigator.pushReplacement(
+       Navigator.push(
+        
                   context,
+                  
                   MaterialPageRoute(
+                    settings: const RouteSettings(name: "HomePage"),
                       builder: (context) => HomePage(user: user)));
     } else {
       setState(() {
