@@ -33,13 +33,13 @@ class _MainListCategoryState extends State<MainListCategory> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.categoryItems
-            .map((item) => Row(
-                  children: [
-                     InkWell(
-                      onTap: () => Navigator.of(context).push(
-                          CustomPageRouter.fadeThroughPageRoute(
-                              ExhibitPage(user: widget.user, image: item))),
-                      child: Hero(
+            .map((item) => InkWell(
+                  onTap: () => Navigator.of(context).push(
+                      CustomPageRouter.fadeThroughPageRoute(
+                          ExhibitPage(user: widget.user, image: item))),
+                  child: Row(
+                    children: [
+                      Hero(
                         tag: 'image-id-$item',
                         child: Image(
                           loadingBuilder: (BuildContext context, Widget child,
@@ -54,15 +54,14 @@ class _MainListCategoryState extends State<MainListCategory> {
                                 height: widget.imageHeight,
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    value:
-                                        loadingProgress.expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                (loadingProgress
-                                                        .expectedTotalBytes ??
-                                                    1)
-                                            : null,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            (loadingProgress
+                                                    .expectedTotalBytes ??
+                                                1)
+                                        : null,
                                   ),
                                 ),
                               );
@@ -73,21 +72,19 @@ class _MainListCategoryState extends State<MainListCategory> {
                           image: NetworkImage(item),
                         ),
                       ),
-                    ),
-                   const SizedBox(width: 5),
-                     Expanded(
-                       child: Text(
-                        widget.itemTitle,
-                        // "TITLE FOR EXHIBIT CATEGORY",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            
-                            color: Theme.of(context).colorScheme.primary),
-                                           ),
-                     ),
-                   
-                  ],
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: Text(
+                          widget.itemTitle,
+                          // "TITLE FOR EXHIBIT CATEGORY",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                    ],
+                  ),
                 ))
             .toList(),
       ),

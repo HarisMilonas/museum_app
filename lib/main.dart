@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/screens/home.dart';
 
 import 'package:museum_app/view/screens/login.dart';
@@ -15,14 +16,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-         colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
-        useMaterial3: true,
-      ),
-      home:  const HomePage(user: null)
-      // const LoginPage(),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
+          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
+          useMaterial3: true,
+        ),
+        home:  HomePage(
+            user: User(
+                email: "some@example.com",
+                password: "123456",
+                username: "harismi;",
+                name: "Haris Mylonas"))
+        // const LoginPage(),
+        );
   }
 }

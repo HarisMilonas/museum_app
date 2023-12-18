@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/componets/drawer/drawer.dart';
+import 'package:museum_app/componets/drawer/drawer.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
 
 

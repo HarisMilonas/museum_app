@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:museum_app/api/exhibits.dart';
 import 'package:museum_app/componets/miscellanious.dart';
 import 'package:museum_app/models/exhibit.dart';
-import 'package:museum_app/view/componets/bottom_sheet_login.dart';
+import 'package:museum_app/componets/bottom_sheet_login.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
 import 'package:museum_app/view/screens/home.dart';
 

@@ -7,7 +7,7 @@ import 'package:museum_app/componets/blog_pages/body_list_home.dart';
 import 'package:museum_app/componets/blog_pages/header_image.dart';
 import 'package:museum_app/componets/styles/textstyles..dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/componets/drawer/drawer.dart';
+import 'package:museum_app/componets/drawer/drawer.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
 import 'package:museum_app/view/screens/category_page.dart';
 

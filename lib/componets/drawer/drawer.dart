@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/componets/drawer/drawer_header.dart';
-import 'package:museum_app/view/componets/drawer/menu_items.dart';
+import 'package:museum_app/componets/drawer/drawer_header.dart';
+import 'package:museum_app/componets/drawer/menu_items.dart';
 
 
 class MyNavigationDrawer extends StatelessWidget {
