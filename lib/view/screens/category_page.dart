@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/componets/blog_pages/blog_layout.dart';
-import 'package:museum_app/componets/blog_pages/body_list_item.dart';
+import 'package:museum_app/componets/blog_pages/body_list_category.dart';
+import 'package:museum_app/componets/blog_pages/body_list_home.dart';
 import 'package:museum_app/componets/blog_pages/header_image.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/componets/drawer/drawer.dart';
@@ -16,11 +17,11 @@ final List<String> imgList = [
 ];
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({required this.user, Key? key , required this.image}) : super(key: key);
+  const CategoryPage({required this.user, Key? key, required this.image})
+      : super(key: key);
 
   final User? user;
   final String image;
- 
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -32,28 +33,34 @@ class _CategoryPageState extends State<CategoryPage> {
     return BlogLayout(user: widget.user, mainColumnChildren: [
       HeaderImage(image: NetworkImage(widget.image)),
       FutureBuilder(
-                future: getData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var categoryItems = snapshot.data!;
-                    return MainList(categoryItems: categoryItems ,
-                     imageHeight: 250,
-                      imageWidth: double.infinity, 
-                    itemTitle: "TITLE FOR SPECIFIC EXHIBIT",
-                    itemDescription: "Small description for the exhibit here.Lorem ipsum color bla bla some more descriptin here.",
-                    user: widget.user,
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text('Error fetching exhibits from database.'),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                })
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var categoryItems = snapshot.data!;
+              return MainListCategory(
+                categoryItems: categoryItems,
+                imageHeight: 100,
+                imageWidth: 100,
+                itemTitle: "Title for specific exhibit. There is a small description here for each exhibit.",
+                user: widget.user,
+              );
+            }
+            if (snapshot.hasError) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: const Center(
+                  child: Text('Error fetching exhibits from database.'),
+                ),
+              );
+            } else {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.5,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+          })
     ]);
   }
 

@@ -23,9 +23,12 @@ class _BlogLayoutState extends State<BlogLayout> {
       withFloatingButtons: true,
       user: widget.user,
       drawer: MyNavigationDrawer(user: widget.user),
-      bodyWidget: SingleChildScrollView(
-        child: Column(
-          children: widget.mainColumnChildren
+      bodyWidget: Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            children: widget.mainColumnChildren
+          ),
         ),
       ),
     );
