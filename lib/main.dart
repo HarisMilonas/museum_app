@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:museum_app/view/screens/home.dart';
 
 import 'package:museum_app/view/screens/login.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-   
   runApp(const MyApp());
 }
 
@@ -18,10 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
+         colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home:  const HomePage(user: null)
+      // const LoginPage(),
     );
   }
 }

@@ -65,10 +65,10 @@ class _BaseLayoutState extends State<BaseLayout> {
           height: double.infinity,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
-            gradient: LinearGradient(colors: [
-              Theme.of(context).colorScheme.background.withBlue(200),
-              Theme.of(context).colorScheme.secondary,
-            ], begin: Alignment.bottomRight, end: Alignment.topLeft),
+            // gradient: LinearGradient(colors: [
+            //   Theme.of(context).colorScheme.background.withBlue(200),
+            //   Theme.of(context).colorScheme.secondary,
+            // ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
           child: widget.bodyWidget),
     );
