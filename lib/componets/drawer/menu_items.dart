@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/screens/exhibits_crud/index.dart';
+import 'package:museum_app/view/screens/email_page.dart';
 import 'package:museum_app/view/screens/roles/index.dart';
 import 'package:museum_app/view/screens/users/index.dart';
 
@@ -38,8 +38,8 @@ class _MyMenuItemsState extends State<MyMenuItems> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.account_balance),
-            title: const Text('Exhibits'),
+            leading: const Icon(Icons.email),
+            title: const Text('Email Sender'),
             onTap: () {
               Navigator.pop(context);
                Navigator.of(context)
@@ -47,7 +47,7 @@ class _MyMenuItemsState extends State<MyMenuItems> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ExhibitsIndex(user: widget.user)));
+                          builder: (context) => EmailPage(user: widget.user)));
             },
           ),
           ExpansionTile(

@@ -43,7 +43,7 @@ class _UserIndexState extends State<UserIndex> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<User> users = _runThroughFilters(snapshot.data!);
-              ;
+              
               if (searchVal.isNotEmpty) {
                 users.removeWhere((element) => !element.name
                     .trim()
