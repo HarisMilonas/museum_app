@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/screens/home.dart';
+import 'package:museum_app/view/screens/exhibits_crud/index.dart';
 import 'package:museum_app/view/screens/roles/index.dart';
 import 'package:museum_app/view/screens/users/index.dart';
 
@@ -37,6 +37,19 @@ class _MyMenuItemsState extends State<MyMenuItems> {
                   .popUntil((route) => route.settings.name== 'HomePage');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.account_balance),
+            title: const Text('Exhibits'),
+            onTap: () {
+              Navigator.pop(context);
+               Navigator.of(context)
+                      .popUntil((route) => route.settings.name == 'HomePage');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ExhibitsIndex(user: widget.user)));
+            },
+          ),
           ExpansionTile(
             title: const Text('Primary Data'),
             leading: const Icon(Icons.view_in_ar),
@@ -62,7 +75,6 @@ class _MyMenuItemsState extends State<MyMenuItems> {
                 },
               ),
               // : const Row(),
-
               // PermissionAccess.canView(widget.user, 'list-businesses')
               //     ? ListTile(
               //         leading: const Icon(Icons.business_center),
