@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:museum_app/componets/dialogs/is_sure_dialog.dart';
 import 'package:museum_app/models/role.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/componets/drawer/drawer.dart';
@@ -16,43 +17,48 @@ class RoleIndex extends StatefulWidget {
 class _RoleIndexState extends State<RoleIndex> {
   TextEditingController titleController = TextEditingController();
   TextEditingController hierarchyController = TextEditingController();
+  bool isAscending = false;
 
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
+        withFloatingButtons: true,
         drawer: MyNavigationDrawer(
           user: widget.user,
         ),
         user: widget.user,
-        withFloatingButtons: true,
-        withCrudButton: true,
-        crudButton: () {
-          showBottomRoleSheet(context);
-        },
         bodyWidget: FutureBuilder(
             future: getRoles(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Role> roles = snapshot.data!;
-                return Container(
-                  margin: const EdgeInsets.only(top: 130, bottom: 10),
-                  child: ListView.builder(
-                      itemCount: roles.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(roles[index].title),
-                          subtitle:
-                              Text("hierarchy: ${roles[index].hierarchy}"),
-                          trailing: GestureDetector(
-                              onTap: () {
-                                titleController.text = roles[index].title;
-                                hierarchyController.text =
-                                    roles[index].hierarchy.toString();
-                                showBottomRoleSheet(context);
-                              },
-                              child: const Icon(Icons.edit)),
-                        );
-                      }),
+                roles.sort((a, b) => !isAscending
+                    ? a.hierarchy.compareTo(b.hierarchy)
+                    : b.hierarchy.compareTo(a.hierarchy));
+                return Column(
+                  children: [
+                    const SizedBox(height: 120),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          addButton(context),
+                          filterChip(context),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: ListView.builder(
+                            itemCount: roles.length,
+                            itemBuilder: (context, index) {
+                              return dissmissTile(context, roles, index);
+                            }),
+                      ),
+                    ),
+                  ],
                 );
               }
               if (snapshot.hasError) {
@@ -65,6 +71,97 @@ class _RoleIndexState extends State<RoleIndex> {
             }));
   }
 
+  InkWell addButton(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        showBottomRoleSheet(context , "Νέος Ρόλος");
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: const Icon(
+          Icons.add,
+          size: 25,
+        ),
+      ),
+    );
+  }
+
+  InkWell filterChip(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isAscending = !isAscending;
+        });
+      },
+      child: Chip(
+          side: BorderSide.none,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("hierarchy"),
+              isAscending
+                  ? const Icon(Icons.expand_less)
+                  : const Icon(Icons.keyboard_arrow_down)
+            ],
+          )),
+    );
+  }
+
+  Container dissmissTile(BuildContext context, List<Role> roles, int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(10)),
+      child: Dismissible(
+        direction: DismissDirection.endToStart,
+        key: ObjectKey(roles[index]),
+        background: Container(
+          padding: const EdgeInsets.only(right: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.orange,
+          ),
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Icon(
+              Icons.delete,
+              size: 28,
+            ),
+          ),
+          //  Colors.red,
+        ),
+        onDismissed: (DismissDirection direction) {
+          setState(() {
+            roles.removeAt(index);
+            //delete from db
+          });
+        },
+        confirmDismiss: (DismissDirection direction) async {
+         return await isSureDialog(context, 'role', roles[index].title) ?? false;
+        },
+        child: ListTile(
+          title: Text(roles[index].title),
+          subtitle: Text("hierarchy: ${roles[index].hierarchy}"),
+          trailing: GestureDetector(
+              onTap: () {
+                titleController.text = roles[index].title;
+                hierarchyController.text = roles[index].hierarchy.toString();
+                showBottomRoleSheet(context , "Ανανέωση Στοιχείων ${roles[index].title}");
+              },
+              child: const Icon(
+                Icons.edit,
+              )),
+        ),
+      ),
+    );
+  }
+
   Future<List<Role>> getRoles() async {
     await Future.delayed(const Duration(seconds: 1));
     return [
@@ -74,7 +171,7 @@ class _RoleIndexState extends State<RoleIndex> {
     ];
   }
 
-  void showBottomRoleSheet(BuildContext context) {
+  void showBottomRoleSheet(BuildContext context , String crud) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -91,6 +188,10 @@ class _RoleIndexState extends State<RoleIndex> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Center(
+                      child: Text(crud , style: TextStyle(fontSize: 18 , color: Theme.of(context).colorScheme.primary),),
+                    ),
+                    const SizedBox(height: 16),
                     // Title TextField
                     TextField(
                       controller: titleController,

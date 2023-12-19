@@ -8,15 +8,12 @@ class BaseLayout extends StatefulWidget {
       required this.bodyWidget,
       this.drawer,
       this.withFloatingButtons = false,
-      this.withCrudButton = false,
-      this.crudButton,
+    
       required this.user});
 
   final User? user;
   final bool? withFloatingButtons;
-  final bool? withCrudButton;
-
-  final void Function()? crudButton;
+  
 
   final Widget bodyWidget;
   final Widget? drawer;
@@ -37,58 +34,30 @@ class _BaseLayoutState extends State<BaseLayout> {
           ? Container(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               color: Colors.transparent,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black.withOpacity(0.2),
-                          child: const Padding(
-                              padding: EdgeInsets.only(left: 7),
-                              child: Icon(Icons.arrow_back_ios)),
-                        ),
-                      ),
-                      widget.user != null
-                          ? InkWell(
-                              onTap: () =>
-                                  _scaffoldKey.currentState!.openDrawer(),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.black.withOpacity(0.2),
-                                child: const Icon(Icons.menu),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black.withOpacity(0.2),
+                      child: const Padding(
+                          padding: EdgeInsets.only(left: 7),
+                          child: Icon(Icons.arrow_back_ios)),
+                    ),
                   ),
-                  const SizedBox(height: 20),
-                  // if its  acrud page show the add button
-                  widget.withCrudButton!
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 45,
-                              height: 45,
-                              child: FloatingActionButton(
-                                backgroundColor: Colors.white,
-                                onPressed: widget.crudButton,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                              ),
-                            )
-                          ],
+                  widget.user != null
+                      ? InkWell(
+                          onTap: () =>
+                              _scaffoldKey.currentState!.openDrawer(),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black.withOpacity(0.2),
+                            child: const Icon(Icons.menu),
+                          ),
                         )
-                      : const Row()
+                      : const SizedBox(),
                 ],
               ),
             )

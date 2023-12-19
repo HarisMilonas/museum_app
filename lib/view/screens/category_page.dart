@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:museum_app/componets/blog_pages/blog_layout.dart';
-import 'package:museum_app/componets/blog_pages/body_list_category.dart';
-import 'package:museum_app/componets/blog_pages/body_list_home.dart';
-import 'package:museum_app/componets/blog_pages/header_image.dart';
+import 'package:museum_app/componets/blog-pages/blog_layout.dart';
+import 'package:museum_app/componets/blog-pages/body_list_category.dart';
+import 'package:museum_app/componets/blog-pages/body_list_home.dart';
+import 'package:museum_app/componets/blog-pages/header_image.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/componets/drawer/drawer.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
