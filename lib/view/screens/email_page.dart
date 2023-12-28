@@ -1,11 +1,7 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:museum_app/componets/blog-pages/blog_layout.dart';
-import 'package:museum_app/componets/blog-pages/body_list_home.dart';
-import 'package:museum_app/componets/blog-pages/header_image.dart';
-import 'package:museum_app/componets/styles/textstyles..dart';
+
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/layouts/base_layout.dart';
 

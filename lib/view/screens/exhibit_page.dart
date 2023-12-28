@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+
 import 'package:museum_app/componets/blog-pages/blog_layout.dart';
-import 'package:museum_app/componets/blog-pages/body_list_home.dart';
+
 import 'package:museum_app/componets/blog-pages/header_image.dart';
-import 'package:museum_app/componets/styles/textstyles..dart';
+import 'package:museum_app/models/exhibit.dart';
+
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/componets/drawer/drawer.dart';
-import 'package:museum_app/view/layouts/base_layout.dart';
-import 'package:museum_app/view/screens/category_page.dart';
+
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -20,22 +19,27 @@ final List<String> imgList = [
 ];
 
 class ExhibitPage extends StatefulWidget {
-  const ExhibitPage({required this.user, required this.image, Key? key})
+  const ExhibitPage({required this.user, required this.exhibit, Key? key})
       : super(key: key);
 
   final User? user;
-  final String image;
+  final Exhibit exhibit;
 
   @override
   State<ExhibitPage> createState() => _ExhibitPageState();
 }
 
 class _ExhibitPageState extends State<ExhibitPage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlogLayout(user: widget.user, mainColumnChildren: [
       HeaderImage(
-        image: NetworkImage(widget.image),
+         image: widget.exhibit.pic1 != null
+            ? Image.memory(widget.exhibit.pic1!.data!).image
+            : Image.asset("images/not_available2.png").image,
         imageTexts: const [],
       ),
       Padding(

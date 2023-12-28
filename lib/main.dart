@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/screens/home.dart';
 
-import 'package:museum_app/view/screens/login.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,16 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
-          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
+        
         ),
-        home:  HomePage(
-            user: User(
-                email: "some@example.com",
-                password: "123456",
-                username: "harismi;",
-                name: "Haris Mylonas"))
+        home:  HomePage(user: 
+        User(email: "fgdg", password: "23432", username: "dfgdf", name: "4354fvdf")
+        )
         // const LoginPage(),
         );
   }

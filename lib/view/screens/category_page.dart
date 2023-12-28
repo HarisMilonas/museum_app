@@ -1,11 +1,14 @@
+
 import 'package:flutter/material.dart';
+import 'package:museum_app/api/exhibits.dart';
 import 'package:museum_app/componets/blog-pages/blog_layout.dart';
 import 'package:museum_app/componets/blog-pages/body_list_category.dart';
-import 'package:museum_app/componets/blog-pages/body_list_home.dart';
+
 import 'package:museum_app/componets/blog-pages/header_image.dart';
+import 'package:museum_app/componets/styles/textstyles..dart';
+import 'package:museum_app/models/exhibit.dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/componets/drawer/drawer.dart';
-import 'package:museum_app/view/layouts/base_layout.dart';
+
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -17,11 +20,11 @@ final List<String> imgList = [
 ];
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({required this.user, Key? key, required this.image})
+  const CategoryPage({required this.user, Key? key, required this.exhibit})
       : super(key: key);
 
   final User? user;
-  final String image;
+  final Exhibit exhibit;
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -31,20 +34,36 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return BlogLayout(user: widget.user, mainColumnChildren: [
-      HeaderImage(image: NetworkImage(widget.image)),
+   
+      HeaderImage(image: 
+          widget.exhibit.pic1 != null
+            ? Image.memory(widget.exhibit.pic1!.data!).image
+            : Image.asset("images/not_available2.png").image
+      ),
       FutureBuilder(
-          future: getData(),
+          future: getData(widget.exhibit.category ?? ""),
           builder: (context, snapshot) {
+      
             if (snapshot.hasData) {
+      
+               String title = widget.exhibit.category?.split('.').first.trim() ?? widget.exhibit.category ?? "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
               var categoryItems = snapshot.data!;
-              return MainListCategory(
+              return 
+              categoryItems.isNotEmpty ?
+              MainListCategory(
                 categoryItems: categoryItems,
                 imageHeight: 100,
                 imageWidth: 100,
-                itemTitle: "Title for specific exhibit. There is a small description here for each exhibit.",
+                itemTitle: title,
                 user: widget.user,
+              )
+      
+              :  Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Center(child: Text("Δεν υπάρχουν διαθέσιμα εκθέματα για αυτή την έκθεση.", style: descriptionStyle2(context),), ),
               );
             }
+      
             if (snapshot.hasError) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
@@ -64,8 +83,10 @@ class _CategoryPageState extends State<CategoryPage> {
     ]);
   }
 
-  Future<List<String>> getData() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return imgList;
+ Future<List<Exhibit>?> getData(String category) async {
+  // depending on the URL path a different query is performed
+    List<Exhibit>? results = await ExhibitApi().getExhibitsCategory(category);
+
+    return results;
   }
 }

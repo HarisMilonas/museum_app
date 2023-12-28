@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    _future = ExhibitApi().getExhibits();
+    _future = ExhibitApi().getExhibits("exhibits");
     super.initState();
   }
 

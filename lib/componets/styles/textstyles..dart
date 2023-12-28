@@ -21,3 +21,13 @@ TextStyle headerStyle3() {
   return const TextStyle(
       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20);
 }
+
+TextStyle descriptionStyle1(BuildContext context) {
+  return  TextStyle(
+      color: Theme.of(context).colorScheme.primary);
+}
+
+TextStyle descriptionStyle2(BuildContext context) {
+  return  TextStyle(
+      color: Theme.of(context).colorScheme.primary , fontSize: 18);
+}

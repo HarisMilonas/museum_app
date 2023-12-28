@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/screens/login.dart';
 
 class BaseLayout extends StatefulWidget {
   const BaseLayout(
@@ -68,11 +67,11 @@ class _BaseLayoutState extends State<BaseLayout> {
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            // gradient: LinearGradient(colors: [
-            //   Theme.of(context).colorScheme.background.withBlue(200),
-            //   Theme.of(context).colorScheme.secondary,
-            // ], begin: Alignment.bottomRight, end: Alignment.topLeft),
+            // color: Theme.of(context).colorScheme.primary,
+            gradient: LinearGradient(colors: [
+              Theme.of(context).colorScheme.background.withBlue(200),
+              Theme.of(context).colorScheme.secondary,
+            ], begin: Alignment.bottomRight, end: Alignment.topLeft),
           ),
           child: widget.bodyWidget),
     );
