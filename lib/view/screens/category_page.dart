@@ -1,14 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:museum_app/api/exhibits.dart';
 import 'package:museum_app/componets/blog-pages/blog_layout.dart';
 import 'package:museum_app/componets/blog-pages/body_list_category.dart';
 
 import 'package:museum_app/componets/blog-pages/header_image.dart';
+import 'package:museum_app/componets/page_router.dart';
 import 'package:museum_app/componets/styles/textstyles..dart';
 import 'package:museum_app/models/exhibit.dart';
 import 'package:museum_app/models/user.dart';
-
+import 'package:museum_app/view/screens/exhibit_page.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -31,39 +31,88 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  String title = '';
+
+  @override
+  void initState() {
+    title = widget.exhibit.category?.split('.').first.trim() ??
+        widget.exhibit.category ??
+        "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlogLayout(user: widget.user, mainColumnChildren: [
-   
-      HeaderImage(image: 
-          widget.exhibit.pic1 != null
-            ? Image.memory(widget.exhibit.pic1!.data!).image
-            : Image.asset("images/not_available2.png").image
-      ),
+      HeaderImage(
+          imageTexts: [
+           widget.exhibit.pic1 != null 
+           ?  SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: headerStyle2()),
+                  const SizedBox(height: 10),
+                  Text(
+                    widget.exhibit.category ?? title,
+                    style: headerStyle3(),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor: Colors.white,
+                          shape: const ContinuousRectangleBorder()),
+                      onPressed: () => Navigator.of(context).push(
+                          CustomPageRouter.fadeThroughPageRoute(ExhibitPage(
+                              user: widget.user, exhibit: widget.exhibit))),
+                      child:  const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Περισσότερα" ,style: TextStyle(fontSize: 16),),
+                          Icon(
+                            Icons.arrow_right_sharp,
+                            color: Colors.white,
+                          )
+                        ],
+                      )),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ) : const SizedBox()
+          ],
+          image: widget.exhibit.pic1 != null
+              ? Image.memory(widget.exhibit.pic1!.data!).image
+              : Image.asset("images/not_available2.png").image),
       FutureBuilder(
           future: getData(widget.exhibit.category ?? ""),
           builder: (context, snapshot) {
-      
             if (snapshot.hasData) {
-      
-               String title = widget.exhibit.category?.split('.').first.trim() ?? widget.exhibit.category ?? "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
+              String title = widget.exhibit.category?.split('.').first.trim() ??
+                  widget.exhibit.category ??
+                  "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
               var categoryItems = snapshot.data!;
-              return 
-              categoryItems.isNotEmpty ?
-              MainListCategory(
-                categoryItems: categoryItems,
-                imageHeight: 100,
-                imageWidth: 100,
-                itemTitle: title,
-                user: widget.user,
-              )
-      
-              :  Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Center(child: Text("Δεν υπάρχουν διαθέσιμα εκθέματα για αυτή την έκθεση.", style: descriptionStyle2(context),), ),
-              );
+              return categoryItems.isNotEmpty
+                  ? MainListCategory(
+                      categoryItems: categoryItems,
+                      imageHeight: 100,
+                      imageWidth: 100,
+                      itemTitle: title,
+                      user: widget.user,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Center(
+                        child: Text(
+                          "Δεν υπάρχουν διαθέσιμα εκθέματα για αυτή την έκθεση.",
+                          style: descriptionStyle2(context),
+                        ),
+                      ),
+                    );
             }
-      
+
             if (snapshot.hasError) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
@@ -83,8 +132,8 @@ class _CategoryPageState extends State<CategoryPage> {
     ]);
   }
 
- Future<List<Exhibit>?> getData(String category) async {
-  // depending on the URL path a different query is performed
+  Future<List<Exhibit>?> getData(String category) async {
+    // depending on the URL path a different query is performed
     List<Exhibit>? results = await ExhibitApi().getExhibitsCategory(category);
 
     return results;

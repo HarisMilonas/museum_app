@@ -7,12 +7,10 @@ class BaseLayout extends StatefulWidget {
       required this.bodyWidget,
       this.drawer,
       this.withFloatingButtons = false,
-    
       required this.user});
 
   final User? user;
   final bool? withFloatingButtons;
-  
 
   final Widget bodyWidget;
   final Widget? drawer;
@@ -42,18 +40,23 @@ class _BaseLayoutState extends State<BaseLayout> {
                     },
                     child: CircleAvatar(
                       backgroundColor: Colors.black.withOpacity(0.2),
-                      child: const Padding(
-                          padding: EdgeInsets.only(left: 7),
-                          child: Icon(Icons.arrow_back_ios)),
+                      child: Padding(
+                          padding: const EdgeInsets.only(left: 7),
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white.withOpacity(0.8),
+                          )),
                     ),
                   ),
                   widget.user != null
                       ? InkWell(
-                          onTap: () =>
-                              _scaffoldKey.currentState!.openDrawer(),
+                          onTap: () => _scaffoldKey.currentState!.openDrawer(),
                           child: CircleAvatar(
                             backgroundColor: Colors.black.withOpacity(0.2),
-                            child: const Icon(Icons.menu),
+                            child:  Icon(
+                              Icons.menu,
+                              color: Colors.white.withOpacity(0.8),
+                            ),
                           ),
                         )
                       : const SizedBox(),

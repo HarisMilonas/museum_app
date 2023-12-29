@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       HeaderImage(
         image: const AssetImage('images/background.png'),
         imageTexts: [
+          const SizedBox(height: 70),
           Text(
             "Ανακάλυψε τα",
             style: headerStyle2(),
@@ -41,13 +42,15 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        color: Theme.of(context).colorScheme.primary,
-        child: const Center(
-          child: Text(
-            "Μόνιμες Εκθέσεις",
-            style: TextStyle(fontSize: 30, color: Colors.white),
-          ),
+        padding: const EdgeInsets.only(top: 5 , bottom:  5 , left: 20),
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+        child: const Row(
+          children: [
+            Text(
+              "Μόνιμες Εκθέσεις",
+              style: TextStyle(fontSize: 30, color: Colors.white),
+            ),
+          ],
         ),
       ),
       FutureBuilder(

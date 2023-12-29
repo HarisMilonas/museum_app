@@ -31,3 +31,8 @@ TextStyle descriptionStyle2(BuildContext context) {
   return  TextStyle(
       color: Theme.of(context).colorScheme.primary , fontSize: 18);
 }
+
+TextStyle descriptionStyle3(BuildContext context) {
+  return  TextStyle(
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.8) , fontSize: 22 , fontWeight: FontWeight.bold);
+}

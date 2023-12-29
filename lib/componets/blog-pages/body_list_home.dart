@@ -31,27 +31,31 @@ class _MainListHomeState extends State<MainListHome> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: widget.categoryItems.map((item) {
-
-            String title = item.category?.split('.').first.trim() ?? item.category ?? "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
-
+          String title = item.category?.split('.').first.trim() ??
+              item.category ??
+              "Χωρίς Συγκεκριμένο όνομα κατηγορίας";
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                title,
-                // "TITLE FOR EXHIBIT CATEGORY",
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  title,
+                  // "TITLE FOR EXHIBIT CATEGORY",
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: descriptionStyle3(context),
+                ),
               ),
-              Text(item.category ?? "", style: descriptionStyle1(context),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, bottom: 3),
+                child: Text(
+                  item.category ?? "", style: descriptionStyle1(context),
                   // "Small description for the category here.Probably something small with not too much rows."
-                  ),
+                ),
+              ),
               InkWell(
                 onTap: () => Navigator.of(context).push(
                     CustomPageRouter.fadeThroughPageRoute(

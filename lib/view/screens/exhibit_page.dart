@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:museum_app/componets/blog-pages/blog_layout.dart';
+import 'package:museum_app/componets/blog-pages/exhibit_image.dart';
 
-import 'package:museum_app/componets/blog-pages/header_image.dart';
 import 'package:museum_app/models/exhibit.dart';
 
 import 'package:museum_app/models/user.dart';
-
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -30,46 +29,92 @@ class ExhibitPage extends StatefulWidget {
 }
 
 class _ExhibitPageState extends State<ExhibitPage> {
+  // String title = '';
+  // String chronologisi = '';
+  // String proelefsi = '';
+  // String diastaseis = '';
+  // String troposapoktisis = '';
 
+  Map<String, String> fieldsMap = {};
 
+  @override
+  void initState() {
+    _fixTexts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlogLayout(user: widget.user, mainColumnChildren: [
-      HeaderImage(
-         image: widget.exhibit.pic1 != null
-            ? Image.memory(widget.exhibit.pic1!.data!).image
-            : Image.asset("images/not_available2.png").image,
-        imageTexts: const [],
+      ExhibitImage(
+        exhibit: widget.exhibit,
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      Container(
+        constraints:
+            BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.5),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 5,
             ),
-            Text("Ο τίτλος του εκθέματος που βλέπουμε παραπάνω.",
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondaryContainer,
-                    fontSize: 18)),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-                " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed elit porttitor nisi viverra pellentesque nec volutpat sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus non diam eu diam molestie vehicula semper sodales leo. Vivamus bibendum interdum neque, nec sodales erat egestas id. Aenean vel purus eget felis auctor dignissim. Proin vitae erat a nisi tincidunt bibendum. Vivamus maximus pharetra quam, ut pharetra mi dignissim ut.",
-                style: TextStyle(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                    fontSize: 16))
+            ...fieldsMap.entries.map((entry) {
+              return columnField(context, entry.value);
+            }).toList(),
           ],
         ),
       )
     ]);
   }
 
+  Column columnField(BuildContext context, String? field) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(field!,
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
+                fontSize: 18)),
+        // Divider(
+        //   color: Theme.of(context).colorScheme.primary,
+        //   thickness: 2,
+        // ),
+        const SizedBox(
+          height: 5,
+        ),
+      ],
+    );
+  }
+
   Future<List<String>> getData() async {
     await Future.delayed(const Duration(seconds: 1));
     return imgList;
+  }
+
+  void _fixTexts() {
+
+    fieldsMap["chronologisi"] =
+        "Χρονολόγηση: ${widget.exhibit.chronologisi == null || widget.exhibit.chronologisi == "" ? "Άγνωστη." : widget.exhibit.chronologisi}";
+
+    if (widget.exhibit.eidos.isNotEmpty) {
+      fieldsMap["eidos"] = " ${widget.exhibit.eidos}";
+    }
+
+    fieldsMap["proelefsi"] =
+        "Προέλευση: ${widget.exhibit.proelefsi == null || widget.exhibit.proelefsi == "" ? "Άγνωστη." : widget.exhibit.proelefsi}";
+
+    fieldsMap["diastaseis"] =
+        "Διαστάσεις: ${widget.exhibit.diastaseis == null || widget.exhibit.diastaseis == "" ? "Άγνωστη." : widget.exhibit.diastaseis}";
+    fieldsMap["troposapoktisis"] =
+        "Τρόπος απόκτησης: ${widget.exhibit.troposapoktisis == null || widget.exhibit.troposapoktisis == "" ? "Άγνωστη." : widget.exhibit.troposapoktisis}";
+
+    fieldsMap["thesi"] =
+        "Θέση: ${widget.exhibit.thesi == null || widget.exhibit.thesi == "" ? "Άγνωστη." : widget.exhibit.thesi}";
+
+    fieldsMap["paratiriseis"] =
+        "Παρατηρήσεις: ${widget.exhibit.paratiriseis == null || widget.exhibit.paratiriseis == "" ? "" : widget.exhibit.paratiriseis}";
   }
 }
