@@ -25,4 +25,20 @@ class AuthApi {
       return {"message": error.toString()};
     }
   }
+
+  Future<Map<String, dynamic>> insertNewsletter(
+      String email, BuildContext context) async {
+    try {
+      var url = Uri.http(baseUrl, 'enlist-people');
+
+      print("EMAIL : $email");
+
+      var response = await http.post(url, body: {"email": email});
+      var body = jsonDecode(response.body);
+
+      return {"message": body['message']};
+    } catch (error) {
+      return {"message": error.toString()};
+    }
+  }
 }

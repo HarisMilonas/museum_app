@@ -20,13 +20,12 @@ class _LoginPageState extends State<LoginPage> {
   Future<List<Exhibit>?>? _future;
 
 
+
   @override
   void initState() {
     _future = ExhibitApi().getExhibits("exhibits");
     super.initState();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                         Size(CustomSizes.maxWidth(context) - 70, 50)),
                   ),
                   onPressed: () {
-                     Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      settings: const RouteSettings(name: "HomePage"),
-                      builder: (context) => const HomePage(user: null)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            settings: const RouteSettings(name: "HomePage"),
+                            builder: (context) => const HomePage(user: null)));
                   },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -117,31 +116,64 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   )),
               const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "Έισαι μέλος του προσωπικού;",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: CustomColors.lettersColor.withOpacity(0.7)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Θες να λαμβάνεις νέα και ειδοποιήσεις;",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: CustomColors.lettersColor.withOpacity(0.7)),
+                      ),
+                      const SizedBox(width: 5),
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const LoginBottomSheet(isEnlisted: true,));
+                        },
+                        child: const Text(
+                          "Εγγραφή",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: CustomColors.lettersColor),
+                        ),
+                      )
+                    ],
                   ),
-                  const SizedBox(width: 5),
-                  InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const LoginBottomSheet());
-                    },
-                    child: const Text(
-                      "Σύνδεση",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: CustomColors.lettersColor),
-                    ),
-                  )
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Έισαι μέλος του προσωπικού;",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: CustomColors.lettersColor.withOpacity(0.7)),
+                      ),
+                      const SizedBox(width: 5),
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const LoginBottomSheet(isEnlisted: false,));
+                        },
+                        child: const Text(
+                          "Σύνδεση",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: CustomColors.lettersColor),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               )
             ],

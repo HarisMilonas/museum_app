@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:museum_app/models/user.dart';
-import 'package:museum_app/view/screens/home.dart';
+import 'package:museum_app/view/screens/login.dart';
 
 
 
@@ -21,10 +20,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
         
         ),
-        home:  HomePage(user: 
-        User(email: "fgdg", password: "23432", username: "dfgdf", name: "4354fvdf")
-        )
-        // const LoginPage(),
+        home: 
+        
+        const LoginPage(),
         );
   }
 }

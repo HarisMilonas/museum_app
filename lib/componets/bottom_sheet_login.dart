@@ -5,8 +5,10 @@ import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/screens/home.dart';
 
 class LoginBottomSheet extends StatefulWidget {
-  const LoginBottomSheet({Key? key}) : super(key: key);
+  const LoginBottomSheet({Key? key, required this.isEnlisted})
+      : super(key: key);
 
+  final bool isEnlisted;
   @override
   State<LoginBottomSheet> createState() => _LoginBottomSheetState();
 }
@@ -15,6 +17,10 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String username = '';
   String password = '';
+  // for enlisting
+  String email = '';
+  String enlistingMessage = '';
+
   bool isLoading = false;
   String errorMessage = '';
 
@@ -38,37 +44,55 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
                   height: 70,
                 ),
                 const SizedBox(height: 25),
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "username",
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.2)),
-                  validator: CustomValidators.standardValidator,
-                  onSaved: (newValue) {
-                    username = newValue!;
-                  },
-                ),
+                widget.isEnlisted
+                    ? TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            hintText: "email",
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2)),
+                        validator: CustomValidators.emailValidator,
+                        onSaved: (newValue) {
+                          email = newValue!;
+                        },
+                      )
+                    : TextFormField(
+                        decoration: InputDecoration(
+                            hintText: "username",
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2)),
+                        validator: CustomValidators.standardValidator,
+                        onSaved: (newValue) {
+                          username = newValue!;
+                        },
+                      ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "password",
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.2)),
-                  validator: CustomValidators.passwordValidator,
-                  obscureText: true,
-                  onFieldSubmitted: (value) => _signUserIn(),
-                  onSaved: (newValue) {
-                    password = newValue!;
-                  },
-                ),
+                widget.isEnlisted
+                    ? const Row()
+                    : TextFormField(
+                        decoration: InputDecoration(
+                            hintText: "password",
+                            border: InputBorder.none,
+                            filled: true,
+                            fillColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2)),
+                        validator: CustomValidators.passwordValidator,
+                        obscureText: true,
+                        onFieldSubmitted: (value) => _signUserIn(),
+                        onSaved: (newValue) {
+                          password = newValue!;
+                        },
+                      ),
                 errorMessage.isNotEmpty
                     ? errorWidget()
                     : const SizedBox(height: 30),
@@ -78,9 +102,12 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
                         height: 25,
                         child: CircularProgressIndicator())
                     : Container(),
+                widget.isEnlisted
+                    ? Text(enlistingMessage)
+                    : const Row(),
                 ElevatedButton(
                   onPressed: _signUserIn,
-                  child: const Text('Είσοδος'),
+                  child: Text(widget.isEnlisted ? 'Εγγραφή' : 'Είσοδος'),
                 ),
               ],
             ),
@@ -98,23 +125,30 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
     setState(() {
       isLoading = true;
     });
-    formKey.currentState!.save();
-    var authenticateResult =
-        await AuthApi().getAuthenticatedUser(username, password, context);
 
-    if (authenticateResult.containsKey("user") && mounted) {
-      User user = authenticateResult["user"];
-       Navigator.push(
-        
-                  context,
-                  
-                  MaterialPageRoute(
-                    settings: const RouteSettings(name: "HomePage"),
-                      builder: (context) => HomePage(user: user)));
-    } else {
+    formKey.currentState!.save();
+
+    if (widget.isEnlisted) {
+      Map<String, dynamic> result = await newsLetterEnlist();
       setState(() {
-        errorMessage = authenticateResult['message'];
+        enlistingMessage = result['message'];
       });
+    } else {
+      var authenticateResult =
+          await AuthApi().getAuthenticatedUser(username, password, context);
+
+      if (authenticateResult.containsKey("user") && mounted) {
+        User user = authenticateResult["user"];
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                settings: const RouteSettings(name: "HomePage"),
+                builder: (context) => HomePage(user: user)));
+      } else {
+        setState(() {
+          errorMessage = authenticateResult['message'];
+        });
+      }
     }
     setState(() {
       isLoading = false;
@@ -162,4 +196,10 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
           ],
         ),
       );
+
+  Future<Map<String, dynamic>> newsLetterEnlist() async {
+    Map<String, dynamic> result =
+        await AuthApi().insertNewsletter(email, context);
+    return result;
+  }
 }
