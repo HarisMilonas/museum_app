@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class NewsLetterApi {
@@ -53,10 +54,14 @@ class NewsLetterApi {
         });
         return emails;
       } else {
-        print('error status code ${response.statusCode}');
+        if (kDebugMode) {
+          print('error status code ${response.statusCode}');
+        }
       }
     } catch (e) {
-      print('error ${e.toString()}');
+      if (kDebugMode) {
+        print('error ${e.toString()}');
+      }
     }
     return null;
   }

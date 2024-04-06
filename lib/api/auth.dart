@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +32,9 @@ class AuthApi {
     try {
       var url = Uri.http(baseUrl, 'enlist-people');
 
-      print("EMAIL : $email");
+      if (kDebugMode) {
+        print("EMAIL : $email");
+      }
 
       var response = await http.post(url, body: {"email": email});
       var body = jsonDecode(response.body);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:museum_app/componets/styles/textstyles..dart';
+import 'package:museum_app/componets/styles/textstyles.dart';
 import 'package:museum_app/models/exhibit.dart';
 
 class ExhibitImage extends StatefulWidget {

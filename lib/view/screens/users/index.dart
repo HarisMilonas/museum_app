@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:museum_app/componets/dialogs/is_sure_dialog.dart';
 import 'package:museum_app/componets/primary-data-pages/filters_bottom_row.dart';
@@ -328,6 +329,7 @@ class _UserIndexState extends State<UserIndex> {
                         String name = nameController.text;
 
                         // Create a User instance with the entered data
+                        // ignore: unused_local_variable
                         User newUser = User(
                           email: email,
                           password: password,
@@ -380,7 +382,9 @@ class _UserIndexState extends State<UserIndex> {
   }
 
   List<User> _runThroughFilters(List<User> users) {
-    print(sortByval);
+    if (kDebugMode) {
+      print(sortByval);
+    }
     // if (userCategories.isNotEmpty) {
     //   users
     //       .removeWhere((user) => !userCategories.contains(user.business.title));

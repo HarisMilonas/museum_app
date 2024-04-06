@@ -1,4 +1,5 @@
-import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 
 class Exhibit {
   int? idexhibit;
@@ -106,7 +107,9 @@ class Exhibit {
       );
       return item;
     } catch (e) {
-      print("We caught and error! ${e.toString()}");
+      if (kDebugMode) {
+        print("We caught and error! ${e.toString()}");
+      }
       return Exhibit(eidos: '');
     }
   }

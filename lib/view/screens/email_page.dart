@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:museum_app/api/newsletter.dart';
 import 'package:museum_app/componets/snackbars.dart';
@@ -88,7 +89,7 @@ class _EmailPageState extends State<EmailPage> {
                         await NewsLetterApi().getNewsLetterEmails();
 
                     if (emails == null || emails == []) {
-                      if (mounted) {
+                      if (context.mounted) {
                         CustomSnackBar.errorMessage(
                             context, "Δεν βρέθηκαν εγγεγραμένοι χρήστες!");
                         Navigator.pop(context);
@@ -98,14 +99,16 @@ class _EmailPageState extends State<EmailPage> {
                     for (String email in emails!) {
                       emailTo = email;
 
-                      print(
+                      if (kDebugMode) {
+                        print(
                           "Subject : ${subjectController.text} Message : ${messageController.text}  toEmail : $emailTo");
+                      }
 
                       String message = await NewsLetterApi().sendEmail(
                           subjectController.text,
                           messageController.text,
                           emailTo);
-                      if (mounted) {
+                      if (context.mounted) {
                         Navigator.pop(context);
                         if (message.contains('Error')) {
                           CustomSnackBar.errorMessage(context, message);

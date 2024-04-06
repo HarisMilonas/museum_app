@@ -5,10 +5,13 @@ waitingDialog(BuildContext context) {
   return showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => WillPopScope(
-            onWillPop: () async => true,
-            child: const Center(
-              child: CircularProgressIndicator(),
+      builder: (context) => PopScope(
+            canPop: false,
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary),
+              ),
             ),
           ));
 }

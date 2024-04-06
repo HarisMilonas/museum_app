@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:museum_app/componets/page_router.dart';
-import 'package:museum_app/componets/styles/textstyles..dart';
+import 'package:museum_app/componets/styles/textstyles.dart';
 import 'package:museum_app/models/exhibit.dart';
 import 'package:museum_app/models/user.dart';
 import 'package:museum_app/view/screens/category_page.dart';

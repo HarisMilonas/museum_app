@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:museum_app/models/exhibit.dart';
 
@@ -26,16 +27,22 @@ class ExhibitApi {
 
         return exhibits;
       } else {
-        print('error status code ${response.statusCode}');
+        if (kDebugMode) {
+          print('error status code ${response.statusCode}');
+        }
       }
     } catch (e) {
-      print('error ${e.toString()}');
+      if (kDebugMode) {
+        print('error ${e.toString()}');
+      }
     }
     return null;
   }
 
   Future<List<Exhibit>?> getExhibitsCategory(String category) async {
-    print(category);
+    if (kDebugMode) {
+      print(category);
+    }
     try {
       var url = Uri.http(baseUrl, 'exhibits-category');
 
@@ -52,10 +59,14 @@ class ExhibitApi {
 
         return exhibits;
       } else {
-        print('error status code ${response.statusCode}');
+        if (kDebugMode) {
+          print('error status code ${response.statusCode}');
+        }
       }
     } catch (e) {
-      print('error ${e.toString()}');
+      if (kDebugMode) {
+        print('error ${e.toString()}');
+      }
     }
     return null;
   }
